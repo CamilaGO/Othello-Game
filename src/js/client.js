@@ -68,35 +68,55 @@ render(root, APP_STATE);*/
     )
 )*/
 const renderCelda = ({
-    size = 100,
+    iFila, 
+    iColumna, 
+    casilla,
+    size = 50,
 }) => {
     const celda = document.createElement('div');
     celda.style.width = `${size}px`;
     celda.style.height = `${size}px`;
-    celda.style.borderRadius = `${size / 2}px`;
-    celda.style.backgroundColor = color;
+    celda.style.borderRadius = `${size / 3}px`;
+    celda.style.backgroundColor = '#b4b5b1';
+    celda.style.margin = '3px';
+    celda.style.float = 'left';
+    celda.fila = iFila;
+    celda.columna = iColumna;
+    celda.dominio = casilla
+    if(celda.dominio == -1){
+        celda.style.backgroundColor = '#ffffff';
+        console.log(celda.dominio);
+    }else if(celda.dominio == 1){
+        celda.style.backgroundColor = '#000000';
+        console.log(celda.dominio);
+    }
+
     return celda;
 };
 
 const render = (mount, state) => {
+    const {playerTurn, board} = state;
     const myBoard = document.createElement('div');
     myBoard.style.backgroundColor = 'green';
-    myBoard.style.width = '550px';
+    myBoard.style.width = '450px';
+    myBoard.style.height = '450px';
     myBoard.style.padding = '25px';
+
+    state.board.map((fila, iFila) => fila.map((casilla, iColumna) => renderCelda({iFila, iColumna, casilla})).forEach(celda => myBoard.appendChild(celda)));
 
     mount.appendChild(myBoard);
     //mount.appendChild(boton);
 };
 const GAME_STATE = {
-    player1Turn: true,
-    player2Turn: false,
+    playerTurn: false,
+    // Turno 0 (false) para player 1 y Turno 1(true) para player 2
+    //En el tablero 0 representa vacio, -1 blanco y 1 negro
     board: [
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, -1, 1, 0, 0, 0],
+        [0, 0, 0, 1, -1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
