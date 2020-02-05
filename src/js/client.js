@@ -113,6 +113,7 @@ const renderCelda = ({
 
 const render = (mount, state) => {
 
+    /* Decoracion*/
     const header = document.createElement('div');
     header.style.backgroundColor='grey';
     header.style.minWidth = '330px';
@@ -213,7 +214,7 @@ const render = (mount, state) => {
     body.style.display = 'flex';
     body.style.flexDirection = 'columns';
     body.style.justifyContent = 'center';
-
+    /* Termina la decoracion*/
 
     const {playerTurn, board} = state;
     const myBoard = document.createElement('div');
@@ -230,6 +231,17 @@ const render = (mount, state) => {
         (casilla, iColumna) => renderCelda({iFila, iColumna,casilla})
         ).forEach(celda => myBoard.appendChild(celda))
     );
+
+    //Convierte en array 2D en 1D para contar cuantas fichas de cada jugador hay
+    const flat = [];
+    state.board.map((fila) => fila.map((casilla) => flat.push(casilla)));
+    console.log(flat)
+    //se cuentan las fichas de cada jugador
+    const fichas1 = flat.filter(valor => valor === 1);
+    const fichas2 = flat.filter(valor => valor === -1);
+    console.log(fichas1);
+    console.log(fichas2);
+
 
     const boton = document.createElement('button');
     boton.style.width = '200px';
