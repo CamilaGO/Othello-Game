@@ -181,31 +181,6 @@ const render = (mount, state) => {
     inst3.style.margin = '10px';
     info.appendChild(inst3);
 
-    /*Los contadores*/
-    const infoJugada =document.createElement('div');
-    infoJugada.style.backgroundColor = 'black';
-    infoJugada.style.height = '200px'
-    //info.style.width = '200px';
-    infoJugada.style.minWidth = '10px';
-    infoJugada.style.marginTop = '50px';
-    infoJugada.style.padding = '10px';
-    infog.appendChild(infoJugada);
-    const cont1 = document.createElement('h1');
-    const contador_1 = document.createTextNode('Fichas blancas: 40\n')
-    cont1.appendChild(contador_1)
-    cont1.style.backgroundColor = 'black'
-    cont1.style.color = 'white';
-    cont1.style.fontSize = '18px';
-    cont1.style.margin = '10px';
-    infoJugada.appendChild(cont1);
-    const cont2 = document.createElement('h1');
-    const contador_2 = document.createTextNode('Fichas negras: 20\n')
-    cont2.appendChild(contador_2)
-    cont2.style.backgroundColor = 'black'
-    cont2.style.color = 'white';
-    cont2.style.fontSize = '18px';
-    cont2.style.margin = '10px';
-    infoJugada.appendChild(cont2);
 
     const body = document.createElement('div');
     body.style.backgroundColor = 'grey'
@@ -237,10 +212,48 @@ const render = (mount, state) => {
     state.board.map((fila) => fila.map((casilla) => flat.push(casilla)));
     console.log(flat)
     //se cuentan las fichas de cada jugador
+    const vacias = flat.filter(valor => valor === 0);
     const fichas1 = flat.filter(valor => valor === 1);
     const fichas2 = flat.filter(valor => valor === -1);
+    console.log(vacias)
     console.log(fichas1);
     console.log(fichas2);
+    //cuando el tablero se llena, se evalua quien es el ganador
+    if (vacias.length < 1){
+        alert('Fin del juego')
+        if (fichas1.length > fichas2.length){
+            alert('El jugador 1 es el ganador!\nRefresca la pagina para jugar de nuevo');
+        } else if (fichas1.length === fichas2.length){
+            alert ('Empate\nRefresca la pagina para jugar de nuevo');
+        }else if (fichas1.length < fichas2.length){
+            alert('El jugador 2 es el ganador!\nRefresca la pagina para jugar de nuevo');
+        };
+    };
+    /*Los contadores en pantalla*/
+    const infoJugada =document.createElement('div');
+    infoJugada.style.backgroundColor = 'black';
+    infoJugada.style.height = '200px'
+    //info.style.width = '200px';
+    infoJugada.style.minWidth = '10px';
+    infoJugada.style.marginTop = '50px';
+    infoJugada.style.padding = '10px';
+    infog.appendChild(infoJugada);
+    const cont1 = document.createElement('h1');
+    const contador_1 = document.createTextNode('Fichas blancas:  ' + (fichas1.length));
+    cont1.appendChild(contador_1)
+    cont1.style.backgroundColor = 'black'
+    cont1.style.color = 'white';
+    cont1.style.fontSize = '18px';
+    cont1.style.margin = '10px';
+    infoJugada.appendChild(cont1);
+    const cont2 = document.createElement('h1');
+    const contador_2 = document.createTextNode('Fichas negras:  ' + (fichas2.length))
+    cont2.appendChild(contador_2)
+    cont2.style.backgroundColor = 'black'
+    cont2.style.color = 'white';
+    cont2.style.fontSize = '18px';
+    cont2.style.margin = '10px';
+    infoJugada.appendChild(cont2);
 
 
     const boton = document.createElement('button');
