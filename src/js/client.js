@@ -58,7 +58,6 @@ const root = document.getElementById('root');
 
 render(root, APP_STATE);*/
 
-
 function Seleccionar(iFila, iColumna, celda){
     //console.log(iFila, iColumna, celda.valor);
     //console.log(GAME_STATE.board[iFila][iColumna])
@@ -131,7 +130,6 @@ const render = (mount, state) => {
     titulo.style.color = 'black'
     titulo.style.fontSize = '30px';
     header.appendChild(titulo);
-
     /* Felx de la derecha*/
     const infog =document.createElement('div');
     infog.style.backgroundColor = 'black';
@@ -140,8 +138,7 @@ const render = (mount, state) => {
     infog.style.justifyContent = 'center';
     infog.style.borderRadius = '50px';
     infog.style.overflow = 'auto';
-    infog.style.height = '400px'
-    //info.style.width = '200px';
+    infog.style.height = '400px';
     infog.style.minWidth = '10px';
     infog.style.marginTop = '40px';
     infog.style.padding = '10px';
@@ -151,7 +148,6 @@ const render = (mount, state) => {
     info.style.backgroundColor = 'black';
     info.style.height = '450px'
     info.style.width = '400px';
-   // info.style.minWidth = '10px';
     info.style.marginTop = '40px';
     info.style.padding = '10px';
     infog.appendChild(info);
@@ -180,8 +176,7 @@ const render = (mount, state) => {
     inst3.style.fontSize = '18px';
     inst3.style.margin = '10px';
     info.appendChild(inst3);
-
-
+    /* EL body */
     const body = document.createElement('div');
     body.style.backgroundColor = 'grey'
     body.style.minWidth = '330px';
@@ -190,7 +185,7 @@ const render = (mount, state) => {
     body.style.flexDirection = 'columns';
     body.style.justifyContent = 'center';
     /* Termina la decoracion*/
-
+    //Se crea el tablero
     const {playerTurn, board} = state;
     const myBoard = document.createElement('div');
     myBoard.style.backgroundColor = 'green';
@@ -201,23 +196,20 @@ const render = (mount, state) => {
     myBoard.style.padding = '25px';
     myBoard.style.marginTop = '0px';
     myBoard.style.margin = '25px';
-
-    state.board.map((fila, iFila) => fila.map(
-        (casilla, iColumna) => renderCelda({iFila, iColumna,casilla})
+    //Se dibuja el tablero
+    state.board.map(
+        (fila, iFila) => fila.map(
+            (casilla, iColumna) => renderCelda({iFila, iColumna,casilla})
         ).forEach(celda => myBoard.appendChild(celda))
     );
 
     //Convierte en array 2D en 1D para contar cuantas fichas de cada jugador hay
     const flat = [];
-    state.board.map((fila) => fila.map((casilla) => flat.push(casilla)));
-    console.log(flat)
+    state.board.forEach((fila) => fila.forEach((casilla) => flat.push(casilla)));
     //se cuentan las fichas de cada jugador
     const vacias = flat.filter(valor => valor === 0);
     const fichas1 = flat.filter(valor => valor === 1);
     const fichas2 = flat.filter(valor => valor === -1);
-    console.log(vacias)
-    console.log(fichas1);
-    console.log(fichas2);
     //cuando el tablero se llena, se evalua quien es el ganador
     if (vacias.length < 1){
         alert('Fin del juego')
@@ -232,8 +224,7 @@ const render = (mount, state) => {
     /*Los contadores en pantalla*/
     const infoJugada =document.createElement('div');
     infoJugada.style.backgroundColor = 'black';
-    infoJugada.style.height = '200px'
-    //info.style.width = '200px';
+    infoJugada.style.height = '200px';
     infoJugada.style.minWidth = '10px';
     infoJugada.style.marginTop = '50px';
     infoJugada.style.padding = '10px';
@@ -255,7 +246,7 @@ const render = (mount, state) => {
     cont2.style.margin = '10px';
     infoJugada.appendChild(cont2);
 
-
+    /*BOton de siguiente turno */
     const boton = document.createElement('button');
     boton.style.width = '200px';
     boton.style.fontSize = '20px';
